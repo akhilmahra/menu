@@ -105,6 +105,42 @@
         function placeOrder() {
             alert("Your order has been placed! Total: $" + totalSpan.textContent);
         }
+        
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', () => {
+                    let total = 0;
+                    checkboxes.forEach(item => {
+                        if (item.checked) {
+                            total += parseFloat(item.value);
+                        }
+                    });
+                    totalSpan.textContent = total.toFixed(2);
+                });
+            });
+        
+            function placeOrder() {
+                // Collect selected items
+                let orderDetails = "Order Details:\n";
+                checkboxes.forEach(item => {
+                    if (item.checked) {
+                        const itemName = item.previousElementSibling.previousElementSibling.textContent;
+                        const itemPrice = item.value;
+                        orderDetails += `${itemName} - $${itemPrice}\n`;
+                    }
+                });
+        
+                // Add the total
+                orderDetails += `\nTotal: $${totalSpan.textContent}`;
+        
+                // WhatsApp link with the order details
+                const phoneNumber = "7060146768"; // Replace with the owner's WhatsApp phone number
+                const message = encodeURIComponent(orderDetails);
+                const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
+        
+                // Open the WhatsApp link
+                window.open(whatsappUrl, "_blank");
+            }
+        
     </script>
 </body>
 </html>
